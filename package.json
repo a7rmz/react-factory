@@ -8,5 +8,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "volta": {
+    "node": "22.14.0"
+  }
 }
