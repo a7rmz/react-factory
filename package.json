@@ -1,0 +1,8 @@
+{
+  "name": "react-factory",
+  "version": "0.0.0",
+  "description": "React Factory",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
