@@ -9,6 +9,7 @@
     "reinstall": "npm run clean:modules && npm install"
   },
   "workspaces": [
+    "apps/*",
     "packages/*"
   ],
   "volta": {
