@@ -1,13 +1,13 @@
 
-import { render, screen } from "@testing-library/react"
+import { render, screen, within } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import App from "./App"
 
 describe("Tic Tae Toe", () => {
     test("renders correctly", () => {
-        render(<App />)
+        const { container } = render(<App />)
 
-        expect(screen.getAllByRole("button")).toHaveLength(9)
+        expect(within(container.querySelector(".game-board")).getAllByRole("button")).toHaveLength(9)
     })
 
     test("player X turn", () => {

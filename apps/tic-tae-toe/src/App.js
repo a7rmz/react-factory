@@ -4,9 +4,7 @@ const Square = ({ value, onClick }) => {
   return <button className="square" onClick={onClick}>{value}</button>;
 }
 
-export default function Board() {
-  const [player, setPlayer] = useState("X")
-  const [board, setBoard] = useState(Array(9).fill(null))
+function Board({ board, player, onPlay }) {
   const winner = computeWinner(board)
   const gameOver = winner !== null || board.every(square => square !== null)
 
@@ -17,8 +15,7 @@ export default function Board() {
 
     nextBoard[idx] = player
 
-    setBoard(nextBoard)
-    setPlayer(player === "X" ? "O" : "X")
+    onPlay(nextBoard)
   }
 
   let status
@@ -50,6 +47,42 @@ export default function Board() {
         <Square value={board[8]} onClick={() => handleOnClick(8)} />
       </div>
     </>
+  )
+}
+
+export default function Game() {
+  const [history, setHistory] = useState([Array(9).fill(null)])
+  const [currentMove, setCurrentMove] = useState(0)
+  const board = history[currentMove]
+  const player = currentMove % 2 === 0 ? "X" : "O"
+
+  const handleOnPlay = (nextBoard) => {
+    const nextHistory = [...history.slice(0, currentMove + 1), nextBoard]
+    setHistory(nextHistory)
+    setCurrentMove(nextHistory.length - 1)
+  }
+
+  const jumpTo = (idx) => {
+    setCurrentMove(idx)
+  }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board board={board} player={player} onPlay={handleOnPlay} />
+      </div>
+      <div className="game-info">
+        <ol>
+          {history.map((_, idx) => (
+            <li key={idx}>
+              <button onClick={() => jumpTo(idx)}>
+                {idx === 0 ? "Go to game start" : `Go to move: ${idx}`}
+              </button>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
   )
 }
 
